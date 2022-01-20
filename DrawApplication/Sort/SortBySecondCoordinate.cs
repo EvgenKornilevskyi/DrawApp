@@ -6,11 +6,11 @@
         {
             if (point1.Y > point2.Y)
             {
-                return -1;
+                return 1;
             }
             else if (point1.Y < point2.Y)
             {
-                return 1;
+                return -1;
             }
             else
             {

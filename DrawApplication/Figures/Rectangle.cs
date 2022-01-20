@@ -1,57 +1,51 @@
 ﻿namespace DrawApplication
 {
-    public class Rectangle
+    public class Rectangle : Figure
     {
-        private readonly int id;
-        private readonly Point point1;
-        private readonly Point point2;
-        private readonly Point point3;
-        private readonly Point point4;
-
-        public HashSet<Point> rectanglePoint = new HashSet<Point>();
-
-        public Rectangle(int _id, Point _point1, Point _point2, Point _point3, Point _point4)
+        public Rectangle(int _id, bool _isFilledBool, Point _point1, Point _point2)
         {
             id = _id;
-            point1 = _point1;
-            point2 = _point2;
-            point3 = _point3;
-            point4 = _point4;
+            isFilled = _isFilledBool;
 
-            List<Point> points = new List<Point> {point1, point2, point3, point4};
+            List<Point> points = new List<Point> {_point1, _point2};
 
             points.Sort(new SortByFirstCoordinate());
 
-            var line1 = new Line(1, points[0], points[1]);
-            var line2 = new Line(2, points[2], points[3]);
+            var _point3 = new Point(points[1].X, points[0].Y);
+            var _point4 = new Point(points[0].X, points[1].Y);
 
-            points.Sort(new SortBySecondCoordinate());
+            var line1 = new Line(1, false, _point1, _point3);
+            var line2 = new Line(2, false, _point1, _point4);
 
-            var line3 = new Line(1, points[0], points[1]);
-            var line4 = new Line(2, points[2], points[3]);
+            var line3 = new Line(1, false, _point2, _point4);
+            var line4 = new Line(2, false, _point2, _point3);
 
-            foreach (var point in line1.linePoint)
+            foreach (var point in line1.figurePoint)
             {
-                rectanglePoint.Add(point);
+                figurePoint.Add(point);
             }
 
-            foreach (var point in line2.linePoint)
+            foreach (var point in line2.figurePoint)
             {
-                rectanglePoint.Add(point);
+                figurePoint.Add(point);
             }
 
-            foreach (var point in line3.linePoint)
+            foreach (var point in line3.figurePoint)
             {
-                rectanglePoint.Add(point);
+                figurePoint.Add(point);
             }
 
-            foreach (var point in line4.linePoint)
+            foreach (var point in line4.figurePoint)
             {
-                rectanglePoint.Add(point);
+                figurePoint.Add(point);
             }
 
-            //rectanglePoint = FillFigure.Fill(ref rectanglePoint);
+            if (isFilled)
+            {
+                figurePoint = FillFigure.Fill(ref figurePoint);
+            }
+
+            square = figurePoint.Count;
         }
-
     }
 }

@@ -7,10 +7,10 @@
             List<List<char>> circuit = new List<List<char>>();
             HashSet<Point> result = new HashSet<Point>();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
                 List<char> tmp = new List<char>();
-                for (int j = 0; j < 100; j++)
+                for (int j = 0; j < 50; j++)
                 {
                     if (circuitPoints.Contains(new Point(i, j)))
                     {
@@ -24,9 +24,9 @@
                 circuit.Add(tmp);
             }
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
-                for (int j = 0; j < 100; j++)
+                for (int j = 0; j < 50; j++)
                 {
                     if (IsGood(i, j, ref circuit))
                     {
@@ -39,9 +39,9 @@
         }
         public static bool IsGood(int x, int y, ref List<List<char>> list)
         {
-            for (int i = x; i <= 100; i++)
+            for (int i = x; i <= 50; i++)
             {
-                if (i == 100)
+                if (i == 50)
                 {
                     return false;
                 }
@@ -61,9 +61,9 @@
                     break;
                 }
             }
-            for (int i = y; i <= 100; i++)
+            for (int i = y; i <= 50; i++)
             {
-                if (i == 100)
+                if (i == 50)
                 {
                     return false;
                 }

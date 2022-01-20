@@ -18,6 +18,13 @@
             }
         }
 
+        public static void DeleteFromDisplay(ref List<List<Stack<char>>> display, HashSet<Point> points)
+        {
+            foreach (Point point in points)
+            {
+                display[point.X][point.Y].Pop();
+            }
+        }
         public static void DisplayShow(ref List<List<Stack<char>>> display)
         {
             for (int i = 0; i < display.Count; i++)
@@ -36,5 +43,24 @@
                 Console.WriteLine();
             }
         }
+
+        public static void DisplayFiguresWithSqures(ref List<Figure> figures)
+        {
+
+            if (figures.Count == 0)
+            {
+                Console.WriteLine("You don`t have any figures.");
+            }
+
+            figures.Sort(new SortBySquare());
+            foreach (Figure f in figures)
+            {
+                if (f != null)
+                {
+                    Console.WriteLine($"Figure with id  #{f.id} has {f.square} squares");
+                }
+            }
+        }
+
     }
 }

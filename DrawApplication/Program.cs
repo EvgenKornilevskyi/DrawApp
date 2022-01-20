@@ -1,2 +1,2 @@
 ﻿using DrawApplication;
-new DrawApplicationRunner(100, 100).Run();
+new DrawApplicationRunner(50, 50).Run();

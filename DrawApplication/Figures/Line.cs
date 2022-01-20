@@ -1,19 +1,14 @@
 ﻿namespace DrawApplication
 {
-    public class Line
+    public class Line : Figure
     {
-        private readonly int id;
-        private readonly Point firstPoint;
-        private readonly Point secondPoint;
-
-        public HashSet<Point> linePoint = new HashSet<Point>();
-
-        public Line(int _id, Point _firstPoint, Point _secondPoint)
+        public Line(int _id, bool _isFilled, Point _firstPoint, Point _secondPoint)
         {
             id = _id;
-            firstPoint = _firstPoint;
-            secondPoint = _secondPoint;
+
             LineDraw(_firstPoint, _secondPoint);
+
+            square = figurePoint.Count;
         }
 
         public void LineDraw(Point point1, Point point2)
@@ -56,7 +51,7 @@
             int x = point1.X;
             for (int y = point1.Y; y <= point2.Y; y++)
             {
-                linePoint.Add(new Point(x, y));
+                figurePoint.Add(new Point(x, y));
                 if (D > 0)
                 {
                     x += xi;
@@ -83,7 +78,7 @@
             int y = point1.Y;
             for (int x = point1.X; x <= point2.X; x++)
             {
-                linePoint.Add(new Point(x, y));
+                figurePoint.Add(new Point(x, y));
                 if (D > 0)
                 {
                     y = y + yi;

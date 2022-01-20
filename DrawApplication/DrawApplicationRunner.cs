@@ -8,7 +8,7 @@ namespace DrawApplication
         public readonly int maxHeight;
 
         private List<List<Stack<char>>> display = new List<List<Stack<char>>>();
-        public List<object> figures = new List<object>();
+        public List<Figure> figures = new List<Figure>();
 
         public DrawApplicationRunner(int _maxWidth, int _maxHight)
         {
@@ -27,29 +27,58 @@ namespace DrawApplication
         }
         public void Run()
         {
-            var stopWatch = Stopwatch.StartNew();
-            
-            while(true)
+            //var stopWatch = Stopwatch.StartNew();
+
+            int id = 1;
+
+            while (true)
             {
                 string? input = Console.ReadLine();
                 List<object> command = new List<object>();
-                try
+
+                string[] args;
+
+                if (input != null)
                 {
-                    command = Parse.Run(input);
+                    args = input.Split(' ');
                 }
-                catch (Exception)
+                else
                 {
-                    Console.WriteLine("Invalid Args");
                     continue;
                 }
 
-                switch(command[0])
+                switch(args[0].ToUpperInvariant())
                 {
-                    case "Add":
-                        Console.WriteLine("Add");
+                    case "ADD":
                         try
                         {
-                            AddFigure.Run(ref display, ref figures, ref command);
+                            command = ParseAdd.Run(input);
+                            AddFigure.Run(ref display, ref figures, ref command, id);
+                            Display.DisplayShow(ref display);
+                            id++;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Invalid Args");
+                        }
+                        break;
+                    case "DELETE":
+                        try
+                        {
+                            command = ParseDelete.Run(input);
+                            DeleteFigure.Run(ref display, ref figures, ref command);
+                            Display.DisplayShow(ref display);
+                        }
+                        catch 
+                        {
+                            Console.WriteLine("Invalid Args");
+                        }
+                        break;
+                    case "MOVE":
+                        try
+                        {
+                            command = ParseMove.Run(input);
+                            MoveFigure.Run(ref display, ref figures, ref command);
                             Display.DisplayShow(ref display);
                         }
                         catch
@@ -57,14 +86,18 @@ namespace DrawApplication
                             Console.WriteLine("Invalid Args");
                         }
                         break;
-                    case "Delete":
-                        Console.WriteLine("Delete");
-                        break;
-                    case "Move":
-                        Console.WriteLine("Move");
-                        break;
-                    case "Clear":
+                    case "CLEAR":
                         Console.Clear();
+                        break;
+                    case "FIGURES":
+                        try
+                        {
+                            Display.DisplayFiguresWithSqures(ref figures);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Invalid Args");
+                        }
                         break;
                     default:
                         Console.WriteLine("Invalid Args");

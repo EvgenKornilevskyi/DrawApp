@@ -1,37 +1,39 @@
 ﻿namespace DrawApplication
 {
-    public class Circle
+    public class Circle : Figure
     {
-        private readonly int id;
-        private readonly Point centre;
-        private readonly int radius;
-        public HashSet<Point> circlePoint = new HashSet<Point>();
-
-        public Circle(int _id, Point _centre, int _radius)
+        public Circle(int _id, bool _isFilledBool, Point _centre, int _radius)
         {
             id = _id;
-            centre = _centre;
-            radius = _radius;
-            CirlceDraw(_centre);
+
+            CirlceDraw(_centre, _radius);
+
+            isFilled = _isFilledBool;
+
+            if (_isFilledBool)
+            {
+                figurePoint = FillFigure.Fill(ref figurePoint);
+            }
+
+            square = figurePoint.Count;
         }
 
-        public void CirlceDraw(Point point)
+        public void CirlceDraw(Point point, int radius)
         {
             int x = 0;
             int y = radius;
             int delta = 1 - 2 * radius;
-            int error = 0;
             while (y >= x)
             {
-                circlePoint.Add(new Point(point.X + x, point.Y + y));
-                circlePoint.Add(new Point(point.X + x, point.Y - y));
-                circlePoint.Add(new Point(point.X - x, point.Y + y));
-                circlePoint.Add(new Point(point.X - x, point.Y - y));
-                circlePoint.Add(new Point(point.X + y, point.Y + x));
-                circlePoint.Add(new Point(point.X + y, point.Y - x));
-                circlePoint.Add(new Point(point.X - y, point.Y + x));
-                circlePoint.Add(new Point(point.X - y, point.Y - x));
-                error = 2 * (delta + y) - 1;
+                figurePoint.Add(new Point(point.X + x, point.Y + y));
+                figurePoint.Add(new Point(point.X + x, point.Y - y));
+                figurePoint.Add(new Point(point.X - x, point.Y + y));
+                figurePoint.Add(new Point(point.X - x, point.Y - y));
+                figurePoint.Add(new Point(point.X + y, point.Y + x));
+                figurePoint.Add(new Point(point.X + y, point.Y - x));
+                figurePoint.Add(new Point(point.X - y, point.Y + x));
+                figurePoint.Add(new Point(point.X - y, point.Y - x));
+                int error = 2 * (delta + y) - 1;
                 if ((delta < 0) && (error <= 0))
                 {
                     delta += 2 * ++x + 1;

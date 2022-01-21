@@ -6,23 +6,27 @@
         {
             if (input == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentNullException("I can`t execute this action.Try to enter something!");
             }
 
-            List<object> result = new List<object>();
+            var result = new List<object>();
 
-            string[] args = input.Split(' ');
+            var args = input.Split(' ');
 
             for (int i = 0; i < args.Length; i++)
             {
-                if (i == 0 || i == 1)
+                if (i <= 1)
                 {
                     result.Add(args[i]);
                 }
                 else
                 {
-                    var x = int.Parse(args[i]);
-                    result.Add(x);
+                    var delta = int.Parse(args[i]);
+                    if (delta < 0)
+                    {
+                        throw new ArgumentException("Can`t move figures on negative delta!");
+                    }
+                    result.Add(delta);
                 }
             }
             return result;

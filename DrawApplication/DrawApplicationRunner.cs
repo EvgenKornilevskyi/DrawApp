@@ -7,8 +7,8 @@ namespace DrawApplication
         public readonly int maxWidth;
         public readonly int maxHeight;
 
-        private List<List<Stack<char>>> display = new List<List<Stack<char>>>();
-        public List<Figure> figures = new List<Figure>();
+        private List<List<Stack<char>>> display = new();
+        public List<Figure> figures = new();
 
         public DrawApplicationRunner(int _maxWidth, int _maxHight)
         {
@@ -17,7 +17,7 @@ namespace DrawApplication
 
             for (int i = 0; i < maxHeight; i++)
             {
-                List<Stack<char>> tmp = new List<Stack<char>>();
+                var tmp = new List<Stack<char>>();
                 for (int j = 0; j < maxWidth; j++)
                 {
                     tmp.Add(new Stack<char>());
@@ -27,86 +27,103 @@ namespace DrawApplication
         }
         public void Run()
         {
-            //var stopWatch = Stopwatch.StartNew();
+            var sr = new StreamReader("ReadMe.txt");
+            var readMe = sr.ReadToEnd();
 
-            int id = 1;
+            Console.WriteLine(readMe);
+
+            var idOfFigure = 1;
 
             while (true)
             {
-                string? input = Console.ReadLine();
-                List<object> command = new List<object>();
+                var input = Console.ReadLine();
 
-                string[] args;
-
-                if (input != null)
+                if (input == null)
                 {
-                    args = input.Split(' ');
-                }
-                else
-                {
+                    Console.WriteLine("Enter something!");
                     continue;
                 }
 
-                switch(args[0].ToUpperInvariant())
+                var command = new List<object>();
+
+                var args = input.Split(' ');
+
+                var action = args[0].ToUpperInvariant();
+
+                switch (action)
                 {
                     case "ADD":
                         try
                         {
                             command = ParseAdd.Run(input);
-                            AddFigure.Run(ref display, ref figures, ref command, id);
+
+                            AddFigure.Run(ref display, ref figures, ref command, idOfFigure);
+
                             Display.DisplayShow(ref display);
-                            id++;
+
+                            idOfFigure++;
                         }
-                        catch
+                        catch(Exception ex)
                         {
-                            Console.WriteLine("Invalid Args");
+                            Console.WriteLine(ex.Message);
                         }
                         break;
                     case "DELETE":
                         try
                         {
                             command = ParseDelete.Run(input);
+
                             DeleteFigure.Run(ref display, ref figures, ref command);
+
                             Display.DisplayShow(ref display);
                         }
-                        catch 
+                        catch(Exception e)
                         {
-                            Console.WriteLine("Invalid Args");
+                            Console.WriteLine(e.Message);
                         }
                         break;
                     case "MOVE":
                         try
                         {
                             command = ParseMove.Run(input);
+
                             MoveFigure.Run(ref display, ref figures, ref command);
+
                             Display.DisplayShow(ref display);
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            Console.WriteLine("Invalid Args");
+                            Console.WriteLine(ex.Message);
                         }
-                        break;
-                    case "CLEAR":
-                        Console.Clear();
                         break;
                     case "FIGURES":
                         try
                         {
                             Display.DisplayFiguresWithSqures(ref figures);
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            Console.WriteLine("Invalid Args");
+                            Console.WriteLine(ex.Message);
                         }
                         break;
+                    case "CLEAR":
+                        Console.Clear();
+                        break;
+                    case "HELP":
+                        Console.WriteLine(readMe);
+                        break;
+                    case "SAVE":
+                        using (var sw = new StreamWriter("MyImage.txt"))
+                        {
+                            sw.Write(Display.SaveImage(ref display));
+                        }
+                        Console.WriteLine("Saved your image in \"MyImage.txt\"");
+                        break;
                     default:
-                        Console.WriteLine("Invalid Args");
+                        Console.WriteLine("I can`t execute this action. Try to enter something!");
                         break;
                 }
             }
-
-            //stopWatch.Stop();
-            //Console.WriteLine(stopWatch.Elapsed.ToString());
         }
     }
 }

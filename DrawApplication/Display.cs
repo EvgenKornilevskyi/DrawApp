@@ -12,7 +12,8 @@
                 }
                 else
                 {
-                    int layer = (int)display[point.X][point.Y].Peek();
+                    int layer = display[point.X][point.Y].Peek();
+
                     display[point.X][point.Y].Push((char)(layer + 1));
                 }
             }
@@ -25,11 +26,12 @@
                 display[point.X][point.Y].Pop();
             }
         }
+
         public static void DisplayShow(ref List<List<Stack<char>>> display)
         {
-            for (int i = 0; i < display.Count; i++)
+            for (var i = 0; i < display.Count; i++)
             {
-                for (int j = 0;j < display[i].Count; j++)
+                for (var j = 0;j < display[i].Count; j++)
                 {
                     if (display[i][j].Count != 0)
                     {
@@ -53,13 +55,37 @@
             }
 
             figures.Sort(new SortBySquare());
+
             foreach (Figure f in figures)
             {
                 if (f != null)
                 {
-                    Console.WriteLine($"Figure with id  #{f.id} has {f.square} squares");
+                    Console.WriteLine($"Figure with id #{f.id} has {f.square} squares");
                 }
             }
+        }
+
+        public static string SaveImage(ref List<List<Stack<char>>> display)
+        {
+            string resultImage = string.Empty;
+
+            for (var i = 0; i < display.Count; i++)
+            {
+                for (var j = 0; j < display[i].Count; j++)
+                {
+                    if (display[i][j].Count != 0)
+                    {
+                        resultImage += display[i][j].Peek();
+                    }
+                    else
+                    {
+                        resultImage += ' ';
+                    }
+                }
+                resultImage += '\n';
+            }
+
+            return resultImage;
         }
 
     }

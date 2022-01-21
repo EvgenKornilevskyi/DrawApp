@@ -2,54 +2,58 @@
 {
     public static class MoveFigure
     {
+        private static readonly int MaxHeight = 50;
         public static void Run(ref List<List<Stack<char>>> display, ref List<Figure> figures, ref List<object> command)
         {
-            if (command.Count != 4)
+            if (command == null || command.Count != 4)
             {
-                throw new ArgumentException(nameof(command));
+                throw new ArgumentException("Move action should contain 4 arguments!");
             }
-
             string? direction = command[1].ToString();
+
+            if (direction == null)
+            {
+                throw new ArgumentException("This direction is unknown to me!");
+            }
 
             string? idString = command[2].ToString();
 
-            int id;
-
-            if (idString != null)
+            if (idString == null)
             {
-                id = int.Parse(idString);
-            }
-            else
-            {
-                throw new ArgumentException(nameof(command));
+                throw new ArgumentException("Figure with this #id doesn`t exist!");
             }
 
-            if (!(direction != null && (direction.ToUpperInvariant() != "UP" || direction.ToUpperInvariant() != "DOWN"
-                || direction.ToUpperInvariant() != "LEFT" || direction.ToUpperInvariant() != "RIGHT")))
+            int id = int.Parse(idString);
+
+            if (!(direction.ToUpperInvariant() == "UP" || direction.ToUpperInvariant() == "DOWN"
+                || direction.ToUpperInvariant() == "LEFT" || direction.ToUpperInvariant() == "RIGHT"))
             {
-                throw new ArgumentException(nameof(command));
+                throw new ArgumentException("This direction is unknown to me!");
             }
 
             string? deltaString = command[3].ToString();
-            int delta = 0;
 
-            if (deltaString != null)
+            if (deltaString == null)
             {
-                delta = int.Parse(deltaString);
-            }
-            else
-            {
-                throw new ArgumentException(nameof(command));
+                throw new ArgumentException("Delta can`t be null!");
             }
 
-            foreach (Figure f in figures)
+            int delta = int.Parse(deltaString);
+
+            foreach (var f in figures)
             {
                 if (f.id == id)
                 {
-                    isValidMove(f.figurePoint, delta, direction);
+                    if(!isValidMove(f.figurePoint, delta, direction))
+                    {
+                        throw new ArgumentException("You are trying to move figure out circuit!");
+                    }
+
                     Display.DeleteFromDisplay(ref display, f.figurePoint);
-                    HashSet<Point> pointsDelta = new HashSet<Point>();
-                    foreach (Point p in f.figurePoint)
+
+                    var pointsDelta = new HashSet<Point>();
+
+                    foreach (var p in f.figurePoint)
                     {
                         if (direction.ToUpperInvariant() == "UP")
                         {
@@ -69,43 +73,45 @@
                         }
                     }
                     f.figurePoint = pointsDelta;
+
                     Display.AddOnDisplay(ref display, f.figurePoint);
+
                     return;
                 }
             }
-            throw new ArgumentException(nameof(command));
+            throw new ArgumentException("Figure with this #id doesn`t exist!");
         }
 
         public static bool isValidMove(HashSet<Point> points, int delta, string direction)
         {
-            foreach (Point p in points)
+            foreach (var p in points)
             {
                 if (direction.ToUpperInvariant() == "UP")
                 {
                     if (p.X - delta < 0)
                     {
-                        throw new ArgumentException();
+                        return false;
                     }
                 }
                 else if (direction.ToUpperInvariant() == "DOWN")
                 {
-                    if (p.X + delta > 49)
+                    if (p.X + delta >= MaxHeight)
                     {
-                        throw new ArgumentException();
+                        return false;
                     }
                 }
                 else if (direction.ToUpperInvariant() == "LEFT")
                 {
                     if (p.Y - delta < 0)
                     {
-                        throw new ArgumentException();
+                        return false;
                     }
                 }
                 else if (direction.ToUpperInvariant() == "RIGHT")
                 {
-                    if (p.Y + delta > 49)
+                    if (p.Y + delta >= MaxHeight)
                     {
-                        throw new ArgumentException();
+                        return false;
                     }
                 }
             }

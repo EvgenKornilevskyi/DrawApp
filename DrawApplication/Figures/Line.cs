@@ -39,17 +39,17 @@
 
         public void LineDrawHigh(Point point1, Point point2)
         {
-            int dx = point2.X - point1.X;
-            int dy = point2.Y - point1.Y;
-            int xi = 1;
+            var dx = point2.X - point1.X;
+            var dy = point2.Y - point1.Y;
+            var xi = 1;
             if (dx < 0)
             {
                 xi = -1;
                 dx = -dx;
             }
-            int D = (2 * dx) - dy;
-            int x = point1.X;
-            for (int y = point1.Y; y <= point2.Y; y++)
+            var D = (2 * dx) - dy;
+            var x = point1.X;
+            for (var y = point1.Y; y <= point2.Y; y++)
             {
                 figurePoint.Add(new Point(x, y));
                 if (D > 0)
@@ -66,17 +66,17 @@
 
         public void LineDrawLow(Point point1, Point point2)
         {
-            int dx = point2.X - point1.X;
-            int dy = point2.Y - point1.Y;
-            int yi = 1;
+            var dx = point2.X - point1.X;
+            var dy = point2.Y - point1.Y;
+            var yi = 1;
             if ( dy < 0)
             {
                 yi = -1;
                 dy = -dy;
             }
-            int D = (2 * dy) - dx;
-            int y = point1.Y;
-            for (int x = point1.X; x <= point2.X; x++)
+            var D = (2 * dy) - dx;
+            var y = point1.Y;
+            for (var x = point1.X; x <= point2.X; x++)
             {
                 figurePoint.Add(new Point(x, y));
                 if (D > 0)

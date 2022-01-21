@@ -1,46 +1,51 @@
-﻿namespace DrawApplication
+﻿using System.Linq;
+
+namespace DrawApplication
 {
     public static class DeleteFigure
     {
         public static void Run(ref List<List<Stack<char>>> display, ref List<Figure> figures, ref List<object> command)
         {
-            if (command.Count != 2)
+            if (command == null)
             {
-                throw new ArgumentException(nameof(command));
+                throw new ArgumentNullException("I can`t execute this action.Try to enter something!");
             }
 
-            string? _id = command[1].ToString();
+            var _id = command[1].ToString();
 
             if (_id == null)
             {
-                throw new ArgumentException(nameof(command));
+                throw new ArgumentException("There is no figure with this #id");
             }
 
-            int id = int.Parse(_id);
+            var id = int.Parse(_id);
 
-            bool idPresent = false;
-            var figurePoints = new HashSet<Point>();
-            int cnt = 0;
+            var idPresent = false;
+
+            var indexToRemove = 0;
 
             foreach (var figure in figures)
             {
                 if (figure.id == id)
                 {
                     idPresent = true;
-                    figurePoints = figure.figurePoint;
+
                     break;
                 }
-                cnt++;
+                indexToRemove++;
             }
 
             if (idPresent)
             {
-                Display.DeleteFromDisplay(ref display, figurePoints);
-                figures.RemoveAt(cnt);
+                var pointsToRemove = figures[indexToRemove].figurePoint;
+
+                Display.DeleteFromDisplay(ref display, pointsToRemove);
+
+                figures.RemoveAt(indexToRemove);
             }
             else
             {
-                throw new ArgumentException(nameof(command));
+                throw new ArgumentException("There is no figure with this #id");
             }
         }
     }

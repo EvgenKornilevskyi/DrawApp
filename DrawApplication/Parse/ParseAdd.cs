@@ -2,19 +2,20 @@
 {
     public static class ParseAdd
     {
+        private static readonly int maxHeight = 50;
         public static List<object> Run(string? input)
         {
 
             if (input == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentException("I can`t execute this action.Try to enter something!");
             }
 
-            List<object> result = new List<object>();
+            var result = new List<object>();
 
-            string[] args = input.Split(' ');
+            var args = input.Split(' ');
             
-            for (int i = 0; i < args.Length; i++)
+            for (var i = 0; i < args.Length; i++)
             {
                 if (i <= 2)
                 {
@@ -22,8 +23,12 @@
                 }
                 else
                 {
-                    var x = int.Parse(args[i]);
-                    result.Add(x);
+                    var coordinate = int.Parse(args[i]);
+                    if (coordinate < 0 || coordinate >= maxHeight)
+                    {
+                        throw new ArgumentException("Can`t draw figures out of circuit!");
+                    }
+                    result.Add(coordinate);
                 }
             }
             return result;

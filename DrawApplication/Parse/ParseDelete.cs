@@ -7,12 +7,12 @@
 
             if (input == null)
             {
-                throw new ArgumentNullException(nameof(input));
+                throw new ArgumentException("I can`t execute this action.Try to enter something!");
             }
 
-            List<object> result = new List<object>();
+            var result = new List<object>();
 
-            string[] args = input.Split(' ');
+            var args = input.Split(' ');
 
             for (int i = 0; i < args.Length; i++)
             {
@@ -22,8 +22,7 @@
                 }
                 else
                 {
-                    var x = int.Parse(args[i]);
-                    result.Add(x);
+                    result.Add(int.Parse(args[i]));
                 }
             }
             return result;

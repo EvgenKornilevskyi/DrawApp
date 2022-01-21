@@ -2,15 +2,18 @@
 {
     public static class FillFigure
     {
+        private static readonly int maxWidth = 50;
+        private static readonly int maxHeight = 50;
         public static HashSet<Point> Fill(ref HashSet<Point> circuitPoints)
         {
-            List<List<char>> circuit = new List<List<char>>();
-            HashSet<Point> result = new HashSet<Point>();
+            var circuit = new List<List<char>>();
 
-            for (int i = 0; i < 50; i++)
+            var resultPoints = new HashSet<Point>();
+
+            for (var i = 0; i < maxHeight; i++)
             {
-                List<char> tmp = new List<char>();
-                for (int j = 0; j < 50; j++)
+                var tmp = new List<char>();
+                for (var j = 0; j < maxWidth; j++)
                 {
                     if (circuitPoints.Contains(new Point(i, j)))
                     {
@@ -24,24 +27,23 @@
                 circuit.Add(tmp);
             }
 
-            for (int i = 0; i < 50; i++)
+            for (var i = 0; i < maxHeight; i++)
             {
-                for (int j = 0; j < 50; j++)
+                for (var j = 0; j < maxWidth; j++)
                 {
                     if (IsGood(i, j, ref circuit))
                     {
-                        result.Add(new Point(i, j));
+                        resultPoints.Add(new Point(i, j));
                     }
                 }
             }
-
-            return result;
+            return resultPoints;
         }
         public static bool IsGood(int x, int y, ref List<List<char>> list)
         {
-            for (int i = x; i <= 50; i++)
+            for (var i = x; i <= maxHeight; i++)
             {
-                if (i == 50)
+                if (i == maxHeight)
                 {
                     return false;
                 }
@@ -50,7 +52,8 @@
                     break;
                 }
             }
-            for (int i = x; i >= -1; i--)
+
+            for (var i = x; i >= -1; i--)
             {
                 if (i == -1)
                 {
@@ -61,9 +64,10 @@
                     break;
                 }
             }
-            for (int i = y; i <= 50; i++)
+
+            for (var i = y; i <= maxHeight; i++)
             {
-                if (i == 50)
+                if (i == maxHeight)
                 {
                     return false;
                 }
@@ -72,7 +76,8 @@
                     break;
                 }
             }
-            for (int i = y; i >= -1; i--)
+
+            for (var i = y; i >= -1; i--)
             {
                 if (i == -1)
                 {

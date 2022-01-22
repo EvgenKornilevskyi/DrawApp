@@ -22,7 +22,11 @@
                 }
                 else
                 {
-                    result.Add(int.Parse(args[i]));
+                    if (!int.TryParse(args[i], out var value))
+                    {
+                        throw new ArgumentException("Id must be non-negtaive integer!");
+                    }
+                    result.Add(value);
                 }
             }
             return result;

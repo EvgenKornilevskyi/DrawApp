@@ -23,7 +23,10 @@
                 throw new ArgumentException("Figure with this #id doesn`t exist!");
             }
 
-            int id = int.Parse(idString);
+            if(!int.TryParse(idString, out var id))
+            {
+                throw new ArgumentException("Id must be non-negative integer!");
+            }
 
             if (!(direction.ToUpperInvariant() == "UP" || direction.ToUpperInvariant() == "DOWN"
                 || direction.ToUpperInvariant() == "LEFT" || direction.ToUpperInvariant() == "RIGHT"))

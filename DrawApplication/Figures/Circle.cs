@@ -2,9 +2,16 @@
 {
     public class Circle : Figure
     {
+        private static readonly int maxHeight = 50;
         public Circle(int _id, bool _isFilledBool, Point _centre, int _radius)
         {
             id = _id;
+
+            if (_centre.X + _radius >= maxHeight || _centre.X - _radius < 0
+                || _centre.Y + _radius >= maxHeight || _centre.Y - _radius < 0)
+            {
+                throw new ArgumentException("Can`t draw figures out of circuit!");
+            }
 
             CirlceDraw(_centre, _radius);
 

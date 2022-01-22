@@ -55,11 +55,11 @@
                 if (D > 0)
                 {
                     x += xi;
-                    D = D + (2 * (dx - dy));
+                    D += (2 * (dx - dy));
                 }
                 else
                 {
-                    D = D + 2 * dx;
+                    D += 2 * dx;
                 }
             }
         }
@@ -81,12 +81,12 @@
                 figurePoint.Add(new Point(x, y));
                 if (D > 0)
                 {
-                    y = y + yi;
-                    D = D + (2 * (dy - dx));
+                    y += yi;
+                    D += (2 * (dy - dx));
                 }
                 else
                 {
-                    D = D + 2 * dy;
+                    D += 2 * dy;
                 }
             }
         }

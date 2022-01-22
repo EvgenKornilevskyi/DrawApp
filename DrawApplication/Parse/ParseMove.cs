@@ -6,7 +6,7 @@
         {
             if (input == null)
             {
-                throw new ArgumentNullException("I can`t execute this action.Try to enter something!");
+                throw new ArgumentException("I can`t execute this action.Try to enter something!");
             }
 
             var result = new List<object>();
@@ -21,10 +21,9 @@
                 }
                 else
                 {
-                    var delta = int.Parse(args[i]);
-                    if (delta < 0)
+                    if (!int.TryParse(args[i], out var delta) || delta < 0)
                     {
-                        throw new ArgumentException("Can`t move figures on negative delta!");
+                        throw new ArgumentException("You can move figures only on non-negative integers!");
                     }
                     result.Add(delta);
                 }

@@ -5,7 +5,7 @@
         public static void Run(ref List<List<Stack<char>>> display, ref List<Figure> figures, ref List<object> command
         , int id)
         {
-            if (command == null || command.Count < 7)
+            if (command == null || command.Count < 6)
             {
                 throw new ArgumentException("You forgot to type in all arguments!");
             }

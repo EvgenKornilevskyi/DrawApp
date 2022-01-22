@@ -23,7 +23,10 @@
                 }
                 else
                 {
-                    var coordinate = int.Parse(args[i]);
+                    if(!int.TryParse(args[i], out var coordinate))
+                    {
+                        throw new ArgumentException("Coordinates must be non-negative integers within border!");
+                    }   
                     if (coordinate < 0 || coordinate >= maxHeight)
                     {
                         throw new ArgumentException("Can`t draw figures out of circuit!");

@@ -8,7 +8,7 @@
 
             isFilled = _isFilledBool;
 
-            List<Point> points = new List<Point> {_point1, _point2};
+            var points = new List<Point> {_point1, _point2};
 
             points.Sort(new SortByFirstCoordinate());
 

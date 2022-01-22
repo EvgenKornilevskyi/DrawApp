@@ -8,7 +8,7 @@ namespace DrawApplication
         {
             if (command == null)
             {
-                throw new ArgumentNullException("I can`t execute this action.Try to enter something!");
+                throw new ArgumentException("I can`t execute this action.Try to enter something!");
             }
 
             var _id = command[1].ToString();
@@ -18,7 +18,10 @@ namespace DrawApplication
                 throw new ArgumentException("There is no figure with this #id");
             }
 
-            var id = int.Parse(_id);
+            if(!int.TryParse(_id, out var id))
+            {
+                throw new ArgumentException("Id must be a non-negative integer!");
+            }
 
             var idPresent = false;
 

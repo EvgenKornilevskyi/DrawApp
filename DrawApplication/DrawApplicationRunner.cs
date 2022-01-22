@@ -120,7 +120,7 @@ namespace DrawApplication
                         Console.WriteLine("Saved your image in \"MyImage.txt\"");
                         break;
                     default:
-                        Console.WriteLine("I can`t execute this action. Try to enter something!");
+                        Console.WriteLine("I can`t execute this action!");
                         break;
                 }
             }

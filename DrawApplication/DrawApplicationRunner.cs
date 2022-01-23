@@ -104,9 +104,6 @@ namespace DrawApplication
                     case "CLEAR":
                         Console.Clear();
                         break;
-                    case "HELP":
-                        Console.WriteLine(readMe);
-                        break;
                     case "SAVE":
                         using (var sw = new StreamWriter("MyImage.txt"))
                         {

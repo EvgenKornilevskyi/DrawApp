@@ -27,11 +27,6 @@ namespace DrawApplication
         }
         public void Run()
         {
-            var sr = new StreamReader("ReadMe.txt");
-            var readMe = sr.ReadToEnd();
-
-            Console.WriteLine(readMe);
-
             var idOfFigure = 1;
 
             while (true)

@@ -87,6 +87,5 @@
 
             return resultImage;
         }
-
     }
 }
